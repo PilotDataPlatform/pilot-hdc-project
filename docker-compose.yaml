@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  project:
+    build:
+      target: project-image
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+    ports:
+      - "127.0.0.1:5064:5064"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5064
+      - RDS_DB_HOST=${RDS_DB_HOST:-postgres}
+      - RDS_DB_PORT=${RDS_DB_PORT:-5432}
+    depends_on:
+      - postgres
+      - s3
+
+  postgres:
+    image: postgres:14.2-alpine
+    ports:
+      - "127.0.0.1:6432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-project}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres-project-pilot}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready --username $$POSTGRES_USER" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  s3:
+    image: minio/minio:RELEASE.2022-05-03T20-36-08Z
+    ports:
+      - "127.0.0.1:9100:9000"
+      - "127.0.0.1:9101:9101"
+    environment:
+      - MINIO_ROOT_USER=${S3_ACCESS_KEY:-ACCESSKEY/GMIMPKTWGOKHIQYYQHPO}
+      - MINIO_ROOT_PASSWORD=${S3_SECRET_KEY:-SECRETKEY/HJGKVAS/TRglfFvzDrbYpdknbc}
+    volumes:
+      - s3-data-1:/data1
+      - s3-data-2:/data2
+      - s3-data-3:/data3
+      - s3-data-4:/data4
+    command: minio server /data{1...4} --console-address ":9101"
+
+  alembic:
+    build:
+      target: alembic-image
+    environment:
+      - RDS_DB_HOST=${RDS_DB_HOST:-postgres}
+      - RDS_DB_PORT=${RDS_DB_PORT:-5432}
+    volumes:
+      - ./migrations/:/app/migrations/
+      - ./project/:/app/project/
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  s3-data-1:
+  s3-data-2:
+  s3-data-3:
+  s3-data-4:
