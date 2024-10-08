@@ -1,6 +1,7 @@
-# Copyright (C) 2022-2023 Indoc Systems
+# Copyright (C) 2022-Present Indoc Systems
 #
-# Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+# Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+# Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
 import logging
@@ -50,6 +51,9 @@ class Settings(BaseSettings):
     PORT: int = 5064
     WORKERS: int = 1
 
+    LOGGING_LEVEL: int = logging.INFO
+    LOGGING_FORMAT: str = 'json'
+
     RDS_DB_HOST: str = Field('127.0.0.1', env={'RDS_DB_HOST', 'OPSDB_UTILITY_HOST'})
     RDS_DB_PORT: int = Field(6432, env={'RDS_DB_PORT', 'OPSDB_UTILITY_PORT'})
     RDS_DB_USERNAME: str = Field('postgres', env={'RDS_DB_USERNAME', 'OPSDB_UTILITY_USERNAME'})
@@ -76,11 +80,6 @@ class Settings(BaseSettings):
     AUTH_SERVICE: HttpUrl = 'http://auth.utility'
 
     ICON_SIZE_LIMIT: int = 2**24
-
-    LOG_LEVEL_DEFAULT = logging.WARN
-    LOG_LEVEL_FILE = logging.WARN
-    LOG_LEVEL_STDOUT = logging.WARN
-    LOG_LEVEL_STDERR = logging.ERROR
 
     SERVICE_CLIENT_TIMEOUT: int = 5
 

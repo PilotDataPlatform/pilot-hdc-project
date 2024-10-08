@@ -1,13 +1,12 @@
+# Any hidden file/folder
+.*
+
 # Folders
-.git
-.venv
-.env
 venv
 env
 kubernetes
 
 # Files
-.DS_Store
-.gitignore
 Dockerfile*
 Jenkinsfile
+docker-compose.yaml

@@ -1,27 +1,18 @@
-# Copyright (C) 2022-2023 Indoc Systems
+# Copyright (C) 2022-Present Indoc Systems
 #
-# Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+# Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+# Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
 import asyncio
 from functools import partial
 from io import BytesIO
 
-from common import LoggerFactory
 from PIL import Image
 
 from project.components.object_storage.s3 import BucketNotFound
-from project.config import get_settings
 from project.dependencies.s3 import S3Client
-
-settings = get_settings()
-logger = LoggerFactory(
-    __name__,
-    level_default=settings.LOG_LEVEL_DEFAULT,
-    level_file=settings.LOG_LEVEL_FILE,
-    level_stdout=settings.LOG_LEVEL_STDOUT,
-    level_stderr=settings.LOG_LEVEL_STDERR,
-).get_logger()
+from project.logger import logger
 
 
 class LogoUploader:

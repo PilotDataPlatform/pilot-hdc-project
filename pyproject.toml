@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "project"
-version = "2.3.0"
+version = "2.3.5"
 description = "Service for managing projects and project related resources."
 authors = ["Indoc Research"]
 
@@ -8,14 +8,14 @@ authors = ["Indoc Research"]
 python = "^3.9"
 aiobotocore = "2.3.0"
 asyncpg = "0.25.0"
-fastapi = "0.75.0"
+fastapi = "0.88.0"
 greenlet = "1.1.2"
 opentelemetry-api = "1.11.1"
 opentelemetry-exporter-jaeger = "1.11.1"
 opentelemetry-instrumentation = "0.30b1"
 opentelemetry-instrumentation-fastapi = "0.30b1"
 pillow = "9.1.0"
-pilot-platform-common = "0.1.0"
+pilot-platform-common = "0.3.0"
 psycopg2 = "2.9.3"
 pydantic = "1.8.2"
 python-magic = "0.4.25"

@@ -1,4 +1,4 @@
-FROM python:3.9.11-buster AS production-environment
+FROM docker-registry.ebrains.eu/hdc-services-image/base-image:python-3.10.14-v1 AS production-environment
 
 ENV PYTHONDONTWRITEBYTECODE=true \
     PYTHONIOENCODING=UTF-8 \
@@ -14,8 +14,6 @@ RUN apt-get update \
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-WORKDIR /app
-
 COPY poetry.lock pyproject.toml ./
 
 RUN poetry install --no-dev --no-root --no-interaction
@@ -24,6 +22,9 @@ RUN poetry install --no-dev --no-root --no-interaction
 FROM production-environment AS project-image
 
 COPY project ./project
+
+RUN chown -R app:app /app
+USER app
 
 ENTRYPOINT ["python3", "-m", "project"]
 
@@ -39,6 +40,9 @@ ENV ALEMBIC_CONFIG=migrations/alembic.ini
 
 COPY project ./project
 COPY migrations ./migrations
+
+RUN chown -R app:app /app
+USER app
 
 ENTRYPOINT ["python3", "-m", "alembic"]
 
