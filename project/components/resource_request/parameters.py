@@ -4,8 +4,6 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-from typing import Optional
-
 from fastapi import Query
 
 from project.components.parameters import FilterParameters
@@ -44,9 +42,9 @@ class ResourceRequestSortParameters(SortParameters):
 class ResourceRequestFilterParameters(FilterParameters):
     """Query parameters for resource request filtering."""
 
-    username: Optional[str] = Query(default=None)
-    email: Optional[str] = Query(default=None)
-    project_code: Optional[str] = Query(default=None)
+    username: str | None = Query(default=None)
+    email: str | None = Query(default=None)
+    project_code: str | None = Query(default=None)
 
     def to_filtering(self) -> ResourceRequestFiltering:
         return ResourceRequestFiltering(

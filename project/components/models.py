@@ -5,7 +5,6 @@
 # You may not use this file except in compliance with the License.
 
 from typing import Any
-from typing import Optional
 
 from project.components.db_model import DBModel
 
@@ -22,7 +21,7 @@ class ModelList(list):
         except ValueError:
             return getattr(source, field)
 
-    def map_by_field(self, field: str, key_type: Optional[type] = None) -> dict[Any, Any]:
+    def map_by_field(self, field: str, key_type: type | None = None) -> dict[Any, Any]:
         """Create map using field argument as key with optional type casting."""
 
         results = {}

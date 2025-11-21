@@ -6,7 +6,6 @@
 
 from datetime import datetime
 from typing import Any
-from typing import Union
 from uuid import UUID
 
 from pydantic import EmailStr
@@ -24,9 +23,9 @@ class ResourceRequestSchema(BaseSchema):
     email: EmailStr
     username: str
     requested_for: str
-    completed_at: Union[datetime, None] = None
-    message: Union[str, None] = None
-    vm_connections: Union[dict[str, Any], None] = None
+    completed_at: datetime | None = None
+    message: str | None = None
+    vm_connections: dict[str, Any] | None = None
 
 
 class EmbeddedProjectSchema(BaseSchema):

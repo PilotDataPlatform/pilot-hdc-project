@@ -4,9 +4,6 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-from typing import Optional
-from typing import Type
-
 from sqlalchemy.sql import Select
 
 from project.components.filtering import Filtering
@@ -16,11 +13,11 @@ from project.components.resource_request.models import ResourceRequest
 class ResourceRequestFiltering(Filtering):
     """Resource Request filter params."""
 
-    username: Optional[str] = None
-    email: Optional[str] = None
-    project_code: Optional[str] = None
+    username: str | None = None
+    email: str | None = None
+    project_code: str | None = None
 
-    def apply(self, statement: Select, model: Type[ResourceRequest]) -> Select:
+    def apply(self, statement: Select, model: type[ResourceRequest]) -> Select:
         """Apply filter to SQL query."""
         if self.username:
             statement = statement.where(model.username.ilike(self.username))

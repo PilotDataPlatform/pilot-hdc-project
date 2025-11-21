@@ -5,7 +5,6 @@
 # You may not use this file except in compliance with the License.
 
 from datetime import datetime
-from typing import Optional
 from uuid import UUID
 
 from fastapi import Query
@@ -27,18 +26,18 @@ class ProjectSortByFields(SortByFields):
 class ProjectFilterParameters(FilterParameters):
     """Query parameters for projects filtering."""
 
-    name: Optional[str] = Query(default=None)
-    code: Optional[str] = Query(default=None)
-    code_any: Optional[str] = Query(default=None)
-    description: Optional[str] = Query(default=None)
-    created_at_start: Optional[datetime] = Query(default=None)
-    created_at_end: Optional[datetime] = Query(default=None)
-    tags_all: Optional[str] = Query(default=None)
-    is_discoverable: Optional[bool] = Query(default=None)
-    ids: Optional[str] = Query(default=None)
+    name: str | None = Query(default=None)
+    code: str | None = Query(default=None)
+    code_any: str | None = Query(default=None)
+    description: str | None = Query(default=None)
+    created_at_start: datetime | None = Query(default=None)
+    created_at_end: datetime | None = Query(default=None)
+    tags_all: str | None = Query(default=None)
+    is_discoverable: bool | None = Query(default=None)
+    ids: str | None = Query(default=None)
 
     @validator('code_any', 'tags_all')
-    def list_split_list_parameters(cls, value: Optional[str]) -> Optional[list[str]]:
+    def list_split_list_parameters(cls, value: str | None) -> list[str] | None:
         if not value:
             return None
 
@@ -49,7 +48,7 @@ class ProjectFilterParameters(FilterParameters):
         return values
 
     @validator('ids')
-    def list_split_cast_values_to_uuid(cls, value: Optional[str]) -> Optional[list[str]]:
+    def list_split_cast_values_to_uuid(cls, value: str | None) -> list[str] | None:
         if not value:
             return None
 

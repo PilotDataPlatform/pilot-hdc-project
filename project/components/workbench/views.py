@@ -4,7 +4,6 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-from typing import Union
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -42,7 +41,7 @@ async def list_workbenches(
 
 @router.get('/{workbench_id}', summary='Get a workbench by id.', response_model=WorkbenchResponseSchema)
 async def get_workbench(
-    workbench_id: Union[UUID, str], workbench_crud: WorkbenchCRUD = Depends(get_workbench_crud)
+    workbench_id: UUID | str, workbench_crud: WorkbenchCRUD = Depends(get_workbench_crud)
 ) -> WorkbenchResponseSchema:
     """Get a workbench by id."""
 

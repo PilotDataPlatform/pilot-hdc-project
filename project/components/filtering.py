@@ -4,8 +4,6 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-from typing import Type
-
 from pydantic import BaseModel
 from sqlalchemy.sql import Select
 
@@ -26,7 +24,7 @@ class Filtering(BaseModel):
 
         return False
 
-    def apply(self, statement: Select, model: Type[DBModel]) -> Select:
+    def apply(self, statement: Select, model: type[DBModel]) -> Select:
         """Return statement with applied filtering."""
 
         raise NotImplementedError

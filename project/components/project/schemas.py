@@ -7,7 +7,6 @@
 from base64 import urlsafe_b64decode
 from datetime import datetime
 from typing import Any
-from typing import Optional
 from uuid import UUID
 
 import magic
@@ -27,7 +26,7 @@ class ProjectSchema(BaseSchema):
     code: constr(min_length=3, max_length=32, regex=r'^[a-z][a-z0-9]*$', strip_whitespace=True)  # noqa: F722
     name: constr(min_length=3, max_length=256, strip_whitespace=True)
     description: constr(max_length=256, strip_whitespace=True) = ''
-    logo_name: Optional[constr(max_length=40, strip_whitespace=True)] = None
+    logo_name: constr(max_length=40, strip_whitespace=True) | None = None
     tags: list[constr(max_length=256, strip_whitespace=True)] = []
     system_tags: list[constr(max_length=256)] = []
     is_discoverable: bool = False
@@ -46,13 +45,13 @@ class ProjectResponseSchema(ProjectSchema):
 
     id: UUID
     created_at: datetime
-    image_url: Optional[HttpUrl] = None
+    image_url: HttpUrl | None = None
 
     class Config:
         orm_mode = True
 
     @validator('image_url', always=True)
-    def set_image_url(cls, _: Any, values: dict[str, Any]) -> Optional[str]:
+    def set_image_url(cls, _: Any, values: dict[str, Any]) -> str | None:
         if logo_name := values['logo_name']:
             prefix = get_settings().S3_PREFIX_FOR_PROJECT_IMAGE_URLS.rstrip('/')
             return f'{prefix}/{logo_name}'

@@ -5,9 +5,6 @@
 # You may not use this file except in compliance with the License.
 
 from typing import Any
-from typing import Optional
-from typing import Type
-from typing import Union
 from uuid import UUID
 
 from sqlalchemy import delete
@@ -39,7 +36,7 @@ class CRUD:
     """Base CRUD class for managing database models."""
 
     session: AsyncSession
-    model: Type[DBModel]
+    model: type[DBModel]
     db_error_codes: dict[str, ServiceException] = {
         '23503': NotFound(),  # missing foreign key
         '23505': AlreadyExists(),  # duplicated entry
@@ -69,7 +66,7 @@ class CRUD:
         """Create base select."""
         return select(self.model)
 
-    async def execute(self, statement: Executable, **kwds: Any) -> Union[CursorResult, Result]:
+    async def execute(self, statement: Executable, **kwds: Any) -> CursorResult | Result:
         """Execute a statement and return buffered result."""
 
         return await self.session.execute(statement, **kwds)
@@ -79,7 +76,7 @@ class CRUD:
 
         return await self.session.scalars(statement, **kwds)
 
-    async def _create_one(self, statement: Executable) -> Union[UUID, str]:
+    async def _create_one(self, statement: Executable) -> UUID | str:
         """Execute a statement to create one entry."""
 
         try:
@@ -155,7 +152,7 @@ class CRUD:
         return entries
 
     async def paginate(
-        self, pagination: Pagination, sorting: Optional[Sorting] = None, filtering: Optional[Filtering] = None
+        self, pagination: Pagination, sorting: Sorting | None = None, filtering: Filtering | None = None
     ) -> Page:
         """Get all existing entries with pagination support."""
 

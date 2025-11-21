@@ -5,7 +5,6 @@
 # You may not use this file except in compliance with the License.
 
 from typing import Any
-from typing import Type
 
 import jq as json_processor
 import pytest
@@ -15,11 +14,14 @@ from httpx import Response
 class JQResult:
     """Typing for jq processor response."""
 
-    def all(self) -> list[Any]: ...
+    def all(self) -> list[Any]:
+        pass
 
-    def first(self) -> Any: ...
+    def first(self) -> Any:
+        pass
 
-    def text(self) -> str: ...
+    def text(self) -> str:
+        pass
 
 
 class JQ:
@@ -33,5 +35,5 @@ class JQ:
 
 
 @pytest.fixture
-def jq() -> Type[JQ]:
+def jq() -> type[JQ]:
     yield JQ

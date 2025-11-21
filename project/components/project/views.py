@@ -4,7 +4,6 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-from typing import Union
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -60,7 +59,7 @@ async def list_projects(
 
 @router.get('/{project_id}', summary='Get a project by id or code.', response_model=ProjectResponseSchema)
 async def get_project(
-    project_id: Union[UUID, str], project_crud: ProjectCRUD = Depends(get_project_crud)
+    project_id: UUID | str, project_crud: ProjectCRUD = Depends(get_project_crud)
 ) -> ProjectResponseSchema:
     """Get a project by id or code."""
 

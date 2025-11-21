@@ -62,7 +62,7 @@ class PolicyManager:
         headers = None
         headers, date = self.minio_policy_client._build_headers(url.netloc, headers, '', creds)
         # make the signiture of request
-        content_hash = hashlib.sha256(''.encode()).hexdigest()
+        content_hash = hashlib.sha256(b'').hexdigest()
         headers = sign_v4_s3('DELETE', url, region, headers, creds, content_hash, date)
 
         # sending to minio server to remove IAM policy

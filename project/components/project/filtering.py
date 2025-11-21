@@ -5,8 +5,6 @@
 # You may not use this file except in compliance with the License.
 
 from datetime import datetime
-from typing import Optional
-from typing import Type
 from uuid import UUID
 
 from sqlalchemy.sql import Select
@@ -18,16 +16,16 @@ from project.components.project import Project
 class ProjectFiltering(Filtering):
     """Projects filtering control parameters."""
 
-    name: Optional[str] = None
-    code: Optional[str] = None
-    codes: Optional[list[str]] = None
-    description: Optional[str] = None
-    created_at: Optional[tuple[datetime, datetime]] = None
-    tags: Optional[list[str]] = None
-    is_discoverable: Optional[bool] = None
-    ids: Optional[list[UUID]] = None
+    name: str | None = None
+    code: str | None = None
+    codes: list[str] | None = None
+    description: str | None = None
+    created_at: tuple[datetime, datetime] | None = None
+    tags: list[str] | None = None
+    is_discoverable: bool | None = None
+    ids: list[UUID] | None = None
 
-    def apply(self, statement: Select, model: Type[Project]) -> Select:
+    def apply(self, statement: Select, model: type[Project]) -> Select:
         """Return statement with applied filtering."""
 
         if self.name:

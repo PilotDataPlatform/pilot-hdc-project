@@ -6,7 +6,6 @@
 
 import logging
 from logging.config import fileConfig
-from typing import Optional
 from urllib.parse import urlparse
 
 from alembic import context
@@ -26,7 +25,7 @@ database_schema = config.get_main_option('database_schema', 'public')
 database_uri = config.get_main_option('database_uri', settings.RDS_DB_URI)
 
 
-def include_name(name: Optional[str], type_: str, parent_names: dict[str, Optional[str]]) -> bool:
+def include_name(name: str | None, type_: str, parent_names: dict[str, str | None]) -> bool:
     """Consider only tables from desired schema."""
 
     if type_ == 'schema':
