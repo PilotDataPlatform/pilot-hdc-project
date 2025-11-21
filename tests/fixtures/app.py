@@ -6,9 +6,9 @@
 
 import asyncio
 from asyncio import AbstractEventLoop
+from collections.abc import Callable
 from contextlib import AbstractContextManager
 from typing import Any
-from typing import Callable
 
 import pytest
 from fastapi import FastAPI

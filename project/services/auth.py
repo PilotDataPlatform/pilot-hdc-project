@@ -5,7 +5,6 @@
 # You may not use this file except in compliance with the License.
 
 from typing import Any
-from typing import Optional
 
 import httpx
 from fastapi import Depends
@@ -24,7 +23,7 @@ class AuthClient:
         self.service_url = auth_service_url + '/v1/'
         self.timeout = timeout
 
-    async def create_user_groups(self, project_code: str, description: Optional[str] = None) -> None:
+    async def create_user_groups(self, project_code: str, description: str | None = None) -> None:
         """Creating user groups with auth service."""
         try:
             payload = {'group_name': project_code, 'description': description}

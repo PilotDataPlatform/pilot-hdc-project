@@ -6,7 +6,6 @@
 
 from datetime import datetime
 from typing import Any
-from typing import Union
 from uuid import UUID
 
 import pytest
@@ -29,8 +28,8 @@ class ResourceRequestFactory(BaseFactory):
         email: str = ...,
         requested_for: str = ...,
         completed_at: datetime = ...,
-        vm_connections: Union[dict[str, Any], None] = ...,
-        message: Union[str, None] = ...,
+        vm_connections: dict[str, Any] | None = ...,
+        message: str | None = ...,
     ) -> ResourceRequestSchema:
         if project_id is ...:
             project_id = self.fake.uuid4(cast_to=None)
