@@ -27,7 +27,7 @@ class AuthClient:
         """Creating user groups with auth service."""
         try:
             payload = {'group_name': project_code, 'description': description}
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
                 response = await client.post(self.service_url + 'user/group', json=payload)
                 response.raise_for_status()
 
@@ -52,7 +52,7 @@ class AuthClient:
         try:
             payload = {'project_roles': ['admin', 'collaborator', 'contributor'], 'project_code': project_code}
 
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
                 response = await client.post(self.service_url + 'admin/users/realm-roles', json=payload)
                 response.raise_for_status()
 
@@ -99,7 +99,7 @@ class AuthClient:
                 'status': 'active',
                 'page_size': 1000,
             }
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
                 response = await client.post(self.service_url + 'admin/roles/users', json=payload)
                 response.raise_for_status()
 

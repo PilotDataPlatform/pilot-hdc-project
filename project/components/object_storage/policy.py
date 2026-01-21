@@ -29,8 +29,9 @@ class Roles(Enum):
 class PolicyManager:
     """Manager for project policies."""
 
-    def __init__(self, minio_policy_client: MinioPolicyClient):
+    def __init__(self, minio_policy_client: MinioPolicyClient, timeout: int) -> None:
         self.minio_policy_client = minio_policy_client
+        self.timeout = timeout
         self.roles = Roles
         self.templates = TEMPLATES_LIBRARY
 
@@ -67,7 +68,7 @@ class PolicyManager:
 
         # sending to minio server to remove IAM policy
         str_endpoint = url.scheme + '://' + url.netloc
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(timeout=self.timeout) as client:
             response = await client.delete(
                 str_endpoint + url.path,
                 params=params,
@@ -96,4 +97,4 @@ async def get_policy_manager(settings: Settings = Depends(get_settings)) -> Poli
     minio_client = await get_minio_policy_client(
         s3_endpoint, settings.S3_ACCESS_KEY, settings.S3_SECRET_KEY, https=settings.S3_HTTPS_ENABLED
     )
-    return PolicyManager(minio_client)
+    return PolicyManager(minio_client, settings.SERVICE_CLIENT_TIMEOUT)

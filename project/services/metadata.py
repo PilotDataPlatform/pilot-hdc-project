@@ -37,8 +37,9 @@ class ItemStatus(StrEnum):
 class MetadataClient:
     """Client to connect with metadata service."""
 
-    def __init__(self, metadata_service_url: str) -> None:
+    def __init__(self, metadata_service_url: str, timeout: int) -> None:
         self.service_url = metadata_service_url + '/v1/'
+        self.timeout = timeout
         self.zones = Zones
 
     def generate_user_folder_payload(self, users: list[dict[str, Any]], project_code: str):
@@ -65,7 +66,7 @@ class MetadataClient:
         """Bulk create folders for project through metadata service."""
         try:
             folders = self.generate_user_folder_payload(users, project_code)
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
                 response = await client.post(self.service_url + 'items/batch/', json={'items': folders})
                 response.raise_for_status()
 
@@ -86,4 +87,4 @@ class MetadataClient:
 
 def get_metadata_client(settings: Settings = Depends(get_settings)) -> MetadataClient:
     """Create a callable dependency for MetadataClient."""
-    return MetadataClient(settings.METADATA_SERVICE)
+    return MetadataClient(settings.METADATA_SERVICE, settings.SERVICE_CLIENT_TIMEOUT)
