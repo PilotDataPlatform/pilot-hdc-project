@@ -16,7 +16,7 @@ from project.services.metadata import MetadataClient
 
 @pytest.fixture
 def metadata_client(settings: Settings) -> MetadataClient:
-    return MetadataClient(settings.METADATA_SERVICE)
+    return MetadataClient(settings.METADATA_SERVICE, settings.SERVICE_CLIENT_TIMEOUT)
 
 
 class TestMetadataClient:
