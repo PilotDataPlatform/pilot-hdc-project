@@ -38,7 +38,7 @@ Service for managing projects and project related resources.
 
 ## Acknowledgements
 
-Pilot HDC was developed by Indoc Research Europe gGmbH ([info@indocresearch.org](mailto:info@indocresearch.org)) in the context of the HealthDataCloud and eBRAIN-Health projects. 
+Pilot HDC was developed by Indoc Research Europe gGmbH ([info@indocresearch.org](mailto:info@indocresearch.org)) in the context of the HealthDataCloud and eBRAIN-Health projects.
 
 The development of the HealthDataCloud open source software was supported by the EBRAINS research infrastructure, funded from the European Union's Horizon 2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3) and H2020 Research and Innovation Action Grant Interactive Computing E-Infrastructure for the Human Brain Project ICEI 800858.
 
